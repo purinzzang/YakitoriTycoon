@@ -18,17 +18,17 @@ public enum YakitoriType
 public class Yakitori : MonoBehaviour
 {
     GameManager gameManager;
+
     public YakitoriType yakitoriType;
     public YakitoriState state;
     public SauceType sauceType;
 
-    public Sprite cookedSprite, sweetSprite, hotSprite;
-    SpriteRenderer sr;
+    Animator anim;
 
     private void Start()
     {
         gameManager = GameManager.instance;
-        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
   
     }
 
@@ -37,17 +37,11 @@ public class Yakitori : MonoBehaviour
         StartCoroutine(CookCo());
     }
 
-    public void InitYakitori(Sprite sprite)
+    public void InitYakitori(RuntimeAnimatorController ac)
     {
         state = YakitoriState.Raw;
         sauceType = SauceType.None;
-        if(sr != null)
-        {
-            sr.color = Color.white;
-            sr.sprite = sprite;
-        }
-            
-
+        anim.runtimeAnimatorController = ac;
     }
 
     public void TouchYakitori()
@@ -64,12 +58,12 @@ public class Yakitori : MonoBehaviour
                 else if (gameManager.curSauce == SauceType.Sweet)
                 {
                     sauceType = SauceType.Sweet;
-                    sr.sprite = sweetSprite;
+                    anim.SetTrigger("doSweet");
                 }
                 else if (gameManager.curSauce == SauceType.Hot)
                 {
                     sauceType = SauceType.Hot;
-                    sr.sprite = hotSprite;
+                    anim.SetTrigger("doHot");
                 }
             }
             else
@@ -88,10 +82,15 @@ public class Yakitori : MonoBehaviour
     IEnumerator CookCo()
     {
         yield return new WaitForSeconds(5f);
-        sr.sprite = cookedSprite;
+        anim.SetTrigger("doCooked");
         state = YakitoriState.Cooked;
-        yield return new WaitForSeconds(10f);
-        sr.color = new Color(0.3f, 0.3f, 0.3f);
+
+        yield return new WaitForSeconds(12f);
+        anim.SetTrigger("doAlert");
+
+        yield return new WaitForSeconds(3f);
+        SFXManager.instance.PlayBurn();
+        anim.SetTrigger("doOvercooked");
         state = YakitoriState.OverCooked;
     }
 }

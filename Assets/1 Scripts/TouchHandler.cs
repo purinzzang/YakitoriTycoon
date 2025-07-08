@@ -25,15 +25,16 @@ public class TouchHandler : MonoBehaviour
         {
             // ui 제한
             if (EventSystem.current.IsPointerOverGameObject())
+            {
                 return;
-
-            
+            }
 
             Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
 
             if (hit.collider != null)
             {
+
                 // 오브젝트 타입에 따라 처리
                 var yakitori = hit.collider.GetComponent<Yakitori>();
                 if (yakitori != null)

@@ -16,11 +16,14 @@ public enum SauceType
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    SFXManager sfxManager;
 
     public Transform[] grills;
-    public Yakitori[] yakitoris = new Yakitori[9];
+    public Yakitori[] yakitoris;
     public List<Yakitori> yakitoriPool = new List<Yakitori>();
 
+    public SpriteRenderer sweetSR, hotSR;
+    public Sprite[] sweetSprites, hotSprites;
     public SauceType curSauce;
 
     public Customer customerPrefab;
@@ -30,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI[] orderTexts;
 
+    int maxOrder, money;
+
     private void Awake()
     {
         instance = this;
@@ -37,10 +42,27 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        sfxManager = GetComponentInChildren<SFXManager>();
+        maxOrder = 1;
+        yakitoris = new Yakitori[grills.Length];
         yakitoriTypes = (YakitoriType[])Enum.GetValues(typeof(YakitoriType));
         sauceTypes = (SauceType[])Enum.GetValues(typeof(SauceType));
 
         AddCustomer();
+        StartCoroutine(Test());
+    }
+
+    IEnumerator Test()
+    {
+
+        yield return new WaitForSeconds(30f);
+        Debug.Log("1 money : " + money);
+        maxOrder++;
+        yield return new WaitForSeconds(30f);
+        Debug.Log("2 money : " + money);
+        maxOrder++;
+        yield return new WaitForSeconds(30f);
+        Debug.Log("3 money : " + money);
     }
 
     public void AddYakitori(Yakitori prefab)
@@ -55,10 +77,7 @@ public class GameManager : MonoBehaviour
                 {
                     newYakitori = yakitoriPool[0];
                     newYakitori.yakitoriType = prefab.yakitoriType;
-                    newYakitori.cookedSprite = prefab.cookedSprite;
-                    newYakitori.sweetSprite = prefab.sweetSprite;
-                    newYakitori.hotSprite = prefab.hotSprite;
-                    newYakitori.InitYakitori(prefab.GetComponent<SpriteRenderer>().sprite);
+                    newYakitori.InitYakitori(prefab.GetComponent<Animator>().runtimeAnimatorController);
                     newYakitori.gameObject.SetActive(true);
                     yakitoriPool.RemoveAt(0);
                 }
@@ -80,6 +99,21 @@ public class GameManager : MonoBehaviour
         if(curSauce != type)
         {
             curSauce = type;
+            if(curSauce == SauceType.None)
+            {
+                sweetSR.sprite = sweetSprites[0];
+                hotSR.sprite = hotSprites[0];
+            }
+            else if (curSauce == SauceType.Sweet)
+            {
+                sweetSR.sprite = sweetSprites[1];
+                hotSR.sprite = hotSprites[0];
+            }
+            else if (curSauce == SauceType.Hot)
+            {
+                sweetSR.sprite = sweetSprites[0];
+                hotSR.sprite = hotSprites[1];
+            }
         }
     }
 
@@ -96,7 +130,7 @@ public class GameManager : MonoBehaviour
         Customer newCustomer = Instantiate(customerPrefab);
 
         // 랜덤 주문 생성
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < maxOrder; i++)
         {
             Order newOrder = new Order();
             newOrder.yakitoriType = yakitoriTypes[Random.Range(0, yakitoriTypes.Length)];
@@ -122,7 +156,7 @@ public class GameManager : MonoBehaviour
         {
             UpdateOrderText();
         }
-        Invoke("AddCustomer", 15f);
+        Invoke("AddCustomer", 10f);
     }
 
     void UpdateOrderText()
@@ -162,6 +196,19 @@ public class GameManager : MonoBehaviour
                 curOrderList[i].amount--;
                 curOrderList[i].text.text = curOrderList[i].name + " " + curOrderList[i].amount + "개";
 
+                // 계산
+                int price = 0;
+                if (yakitori.yakitoriType == YakitoriType.Hatsu)
+                    price += 3000;
+                else
+                    price += 4000;
+
+                if (yakitori.sauceType != SauceType.None)
+                    price += 500;
+
+                money += price;
+                sfxManager.PlayCoin();
+
                 // 잔여 개수 0개가 되면 주문 클리어
                 if (curOrderList[i].amount <= 0)
                 {
@@ -176,8 +223,10 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 DestroyYakitori(yakitori);
-                break;
+                return;
             }
         }
+
+        sfxManager.PlayWrong();
     }
 }
