@@ -1,14 +1,35 @@
 using UnityEngine;
+using System.Collections.Generic;
+
+public enum SFXType
+{
+    Coin,
+    Burn,
+    Wrong,
+    Fry
+}
+
 
 public class SFXManager : MonoBehaviour
 {
     public static SFXManager instance;
-    public AudioClip coinClip, burnClip, wrongClip;
-    AudioSource audioSource;
+
+    public AudioClip coinClip, burnClip, wrongClip, fryClip;
+    private AudioSource audioSource;
+
+    private Dictionary<SFXType, AudioClip> sfxDict;
 
     private void Awake()
     {
         instance = this;
+
+        sfxDict = new Dictionary<SFXType, AudioClip>
+        {
+            { SFXType.Coin, coinClip },
+            { SFXType.Burn, burnClip },
+            { SFXType.Wrong, wrongClip },
+            { SFXType.Fry, fryClip }
+        };
     }
 
     private void Start()
@@ -16,18 +37,15 @@ public class SFXManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlayCoin()
+    public void PlaySFX(SFXType type)
     {
-        audioSource.PlayOneShot(coinClip);
-    }
-
-    public void PlayBurn()
-    {
-        audioSource.PlayOneShot(burnClip);
-    }
-
-    public void PlayWrong()
-    {
-        audioSource.PlayOneShot(wrongClip);
+        if (sfxDict.TryGetValue(type, out var clip) && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogWarning($"SFXManager: 클립을 찾을 수 없음 {type}");
+        }
     }
 }

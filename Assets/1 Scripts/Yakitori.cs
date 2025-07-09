@@ -81,6 +81,7 @@ public class Yakitori : MonoBehaviour
 
     IEnumerator CookCo()
     {
+
         yield return new WaitForSeconds(5f);
         anim.SetTrigger("doCooked");
         state = YakitoriState.Cooked;
@@ -89,7 +90,7 @@ public class Yakitori : MonoBehaviour
         anim.SetTrigger("doAlert");
 
         yield return new WaitForSeconds(3f);
-        SFXManager.instance.PlayBurn();
+        SFXManager.instance.PlaySFX(SFXType.Burn);
         anim.SetTrigger("doOvercooked");
         state = YakitoriState.OverCooked;
     }

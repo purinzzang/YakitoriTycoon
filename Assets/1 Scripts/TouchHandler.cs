@@ -53,6 +53,12 @@ public class TouchHandler : MonoBehaviour
                 {
                     sauce.ChangeSauce();
                 }
+
+                var customer = hit.collider.GetComponent<Customer>();
+                if (customer != null)
+                {
+                    customer.TouchCustomer();
+                }
             }
             else
             {

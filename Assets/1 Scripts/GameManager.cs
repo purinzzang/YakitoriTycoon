@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public enum SauceType
@@ -32,8 +34,10 @@ public class GameManager : MonoBehaviour
     SauceType[] sauceTypes;
 
     public TextMeshProUGUI[] orderTexts;
-
-    int maxOrder, money;
+    public TextMeshProUGUI moneyText;
+    public Image timeBar;
+    int maxOrder, money, soldYakitori, happyCustomer;
+    public Animator endAnim;
 
     private void Awake()
     {
@@ -44,25 +48,45 @@ public class GameManager : MonoBehaviour
     {
         sfxManager = GetComponentInChildren<SFXManager>();
         maxOrder = 1;
+        soldYakitori = 0;
+        happyCustomer = 0;
         yakitoris = new Yakitori[grills.Length];
         yakitoriTypes = (YakitoriType[])Enum.GetValues(typeof(YakitoriType));
         sauceTypes = (SauceType[])Enum.GetValues(typeof(SauceType));
 
         AddCustomer();
-        StartCoroutine(Test());
+        StartCoroutine(Main());
     }
 
-    IEnumerator Test()
+    IEnumerator Main()
     {
+        float timer = 0;
+        float maxTime = 90f;
+        while (timer < maxTime)
+        {
+            yield return new WaitForSeconds(1f);
+            timer++;
+            timeBar.fillAmount = timer / maxTime;
 
-        yield return new WaitForSeconds(30f);
-        Debug.Log("1 money : " + money);
-        maxOrder++;
-        yield return new WaitForSeconds(30f);
-        Debug.Log("2 money : " + money);
-        maxOrder++;
-        yield return new WaitForSeconds(30f);
-        Debug.Log("3 money : " + money);
+            if(timer % 30 == 0)
+            {
+                Debug.Log("level up");
+                maxOrder++;
+            }
+        }
+        Debug.Log("end");
+        CancelInvoke();
+        Debug.Log("남은 손님 수 : " + customerList.Count);
+        for(int i = 0; i < customerList.Count; i++)
+        {
+            customerList[i].Bye();
+        }
+        customerList.Clear();
+
+        endAnim.SetTrigger("doEnd");
+        //yield return new WaitForSeconds(1f);
+        //Time.timeScale = 0;
+
     }
 
     public void AddYakitori(Yakitori prefab)
@@ -88,6 +112,7 @@ public class GameManager : MonoBehaviour
                      
                 yakitoris[i] = newYakitori;
                 newYakitori.transform.position = grills[i].position;
+                sfxManager.PlaySFX(SFXType.Fry);
                 break;
             }
         }
@@ -154,16 +179,21 @@ public class GameManager : MonoBehaviour
         customerList.Add(newCustomer);
         if(customerList.Count == 1)
         {
-            UpdateOrderText();
+            UpdateOrderText(customerList[0].orderList);
         }
         Invoke("AddCustomer", 10f);
     }
 
-    void UpdateOrderText()
+    public void UpdateOrderText(List<Order> orderList)
     {
-        for(int i = 0; i < customerList[0].orderList.Count; i++)
+        for(int i = 0; i < orderTexts.Length; i++)
         {
-            Order newOrder = customerList[0].orderList[i];
+            orderTexts[i].gameObject.SetActive(false);
+        }
+
+        for(int i = 0; i < orderList.Count; i++)
+        {
+            Order newOrder = orderList[i];
             newOrder.text.text = newOrder.name + " " + newOrder.amount + "개";
             newOrder.text.gameObject.SetActive(true);
         }
@@ -171,7 +201,8 @@ public class GameManager : MonoBehaviour
 
     public void ByeCustomer()
     {
-        customerList[0].gameObject.SetActive(false);
+        Debug.Log("손님 나가요");
+        customerList[0].Bye();
         customerList.RemoveAt(0);
         for(int i = 0; i <  customerList.Count; i++)
         {
@@ -179,9 +210,10 @@ public class GameManager : MonoBehaviour
         }
         if (customerList.Count > 0)
         {
-            UpdateOrderText();
+            UpdateOrderText(customerList[0].orderList);
         }
     }
+    
 
     public void GiveYakitori(Yakitori yakitori)
     {
@@ -207,7 +239,9 @@ public class GameManager : MonoBehaviour
                     price += 500;
 
                 money += price;
-                sfxManager.PlayCoin();
+                moneyText.text = "매출 : " + money + " 원";
+                soldYakitori++;
+                sfxManager.PlaySFX(SFXType.Coin);
 
                 // 잔여 개수 0개가 되면 주문 클리어
                 if (curOrderList[i].amount <= 0)
@@ -227,6 +261,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        sfxManager.PlayWrong();
+        sfxManager.PlaySFX(SFXType.Wrong);
     }
 }

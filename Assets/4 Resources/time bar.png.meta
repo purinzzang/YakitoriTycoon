@@ -1,10 +1,37 @@
 fileFormatVersion: 2
-guid: 049271094e0c939409ab72f49af79ed5
+guid: 0541a0df52e5e6044890c5a59b093dae
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3308745582530319608
-    second: cart (1)_0
+      213: -5842989527270843960
+    second: time bar_0
+  - first:
+      213: 4274982180999018982
+    second: time bar_1
+  - first:
+      213: -4604667550426638064
+    second: time bar_2
+  - first:
+      213: -6132100004842624066
+    second: time bar_3
+  - first:
+      213: -3828315864697597851
+    second: time bar_4
+  - first:
+      213: 5607000992727337327
+    second: time bar_5
+  - first:
+      213: -4151272287363914634
+    second: time bar_6
+  - first:
+      213: 7964252815212464332
+    second: time bar_7
+  - first:
+      213: 3483029201208164801
+    second: time bar_8
+  - first:
+      213: -7989586116153262423
+    second: time bar_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +73,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +99,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -126,23 +153,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cart (1)_0
+      name: time bar_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 45
-        height: 51
+        x: 1
+        y: 11
+        width: 73
+        height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 2, y: 2, z: 2, w: 2}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 80b23255c69f412d0800000000000000
-      internalID: -3308745582530319608
+      spriteID: 8c991b08bf789eea0800000000000000
+      internalID: -5842989527270843960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: time bar_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 75
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 2, y: 2, z: 2, w: 2}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e9329fc4a9c35b30800000000000000
+      internalID: 4274982180999018982
       vertices: []
       indices: 
       edges: []
@@ -151,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 36a5a4d0ee5da004b97b7f50232b9859
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +210,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cart (1)_0: -3308745582530319608
+      time bar_0: -5842989527270843960
+      time bar_1: 4274982180999018982
+      time bar_2: -4604667550426638064
+      time bar_3: -6132100004842624066
+      time bar_4: -3828315864697597851
+      time bar_5: 5607000992727337327
+      time bar_6: -4151272287363914634
+      time bar_7: 7964252815212464332
+      time bar_8: 3483029201208164801
+      time bar_9: -7989586116153262423
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
