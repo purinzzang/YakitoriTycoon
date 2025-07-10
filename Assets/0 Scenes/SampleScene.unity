@@ -609,7 +609,7 @@ GameObject:
   - component: {fileID: 164361772}
   - component: {fileID: 164361771}
   m_Layer: 5
-  m_Name: 0 (3)
+  m_Name: text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2876,7 +2876,7 @@ GameObject:
   - component: {fileID: 817531175}
   - component: {fileID: 817531174}
   m_Layer: 5
-  m_Name: 0 (2)
+  m_Name: end text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2921,8 +2921,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\n99 \uAC1C\n999999 \uC6D0\n\u3141\u3141\u3141\u3141\u3141\n\n\uB2EC\uCF64\uD55C
-    \uB2ED\uD30C\uAF2C\uCE58"
+  m_text: "\n99 \uAC1C\n999999 \uC6D0\n100 %\n\n\uB2EC\uCF64 \uB2ED\uD30C\uAF2C\uCE58"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0a01d66f670db4468ab24a1ffdc1c77, type: 2}
   m_sharedMaterial: {fileID: 4596662936977017174, guid: a0a01d66f670db4468ab24a1ffdc1c77, type: 2}
@@ -4561,7 +4560,7 @@ GameObject:
   - component: {fileID: 1554755315}
   - component: {fileID: 1554755314}
   m_Layer: 5
-  m_Name: 0 (1)
+  m_Name: text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4865,7 +4864,7 @@ GameObject:
   - component: {fileID: 1672386703}
   - component: {fileID: 1672386702}
   m_Layer: 5
-  m_Name: 0 (4)
+  m_Name: review text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4885,10 +4884,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1933847060}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -325}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1672386702
 MonoBehaviour:
@@ -4910,7 +4909,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC57C\uD638\n\uB9DB\uB3C4\uB9AC~"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a0a01d66f670db4468ab24a1ffdc1c77, type: 2}
   m_sharedMaterial: {fileID: 4596662936977017174, guid: a0a01d66f670db4468ab24a1ffdc1c77, type: 2}
@@ -4953,7 +4952,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -5473,8 +5472,11 @@ MonoBehaviour:
   - {fileID: 1554161059}
   - {fileID: 1797173951}
   moneyText: {fileID: 1650894567}
+  endText: {fileID: 817531174}
+  reviewText: {fileID: 1672386702}
   timeBar: {fileID: 810806638}
   endAnim: {fileID: 256636981}
+  reviewData: {fileID: 4900000, guid: 519e5ec2bafc98a4884f0d95333c40a8, type: 3}
 --- !u!114 &1912274621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6064,7 +6066,7 @@ GameObject:
   - component: {fileID: 2102631131}
   - component: {fileID: 2102631130}
   m_Layer: 5
-  m_Name: 0
+  m_Name: text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

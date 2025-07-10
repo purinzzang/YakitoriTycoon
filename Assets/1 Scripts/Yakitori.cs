@@ -93,5 +93,6 @@ public class Yakitori : MonoBehaviour
         SFXManager.instance.PlaySFX(SFXType.Burn);
         anim.SetTrigger("doOvercooked");
         state = YakitoriState.OverCooked;
+        gameManager.BurnYakitori();
     }
 }

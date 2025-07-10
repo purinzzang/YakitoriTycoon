@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,10 +35,13 @@ public class GameManager : MonoBehaviour
     SauceType[] sauceTypes;
 
     public TextMeshProUGUI[] orderTexts;
-    public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI moneyText, endText, reviewText;
     public Image timeBar;
-    int maxOrder, money, soldYakitori, happyCustomer;
+    int maxOrder, money, tryYakitori, burnYakitori, wrongYakitori;
+    int[] soldYakitori;
     public Animator endAnim;
+    public TextAsset reviewData;
+    Dictionary<int, string> reviewDict;
 
     private void Awake()
     {
@@ -48,8 +52,9 @@ public class GameManager : MonoBehaviour
     {
         sfxManager = GetComponentInChildren<SFXManager>();
         maxOrder = 1;
-        soldYakitori = 0;
-        happyCustomer = 0;
+        tryYakitori = 0;
+        soldYakitori = new int[9];
+        burnYakitori = 0;
         yakitoris = new Yakitori[grills.Length];
         yakitoriTypes = (YakitoriType[])Enum.GetValues(typeof(YakitoriType));
         sauceTypes = (SauceType[])Enum.GetValues(typeof(SauceType));
@@ -77,16 +82,40 @@ public class GameManager : MonoBehaviour
         Debug.Log("end");
         CancelInvoke();
         Debug.Log("남은 손님 수 : " + customerList.Count);
+
+        // 손님 전부 보내기
         for(int i = 0; i < customerList.Count; i++)
         {
             customerList[i].Bye();
         }
         customerList.Clear();
 
-        endAnim.SetTrigger("doEnd");
-        //yield return new WaitForSeconds(1f);
-        //Time.timeScale = 0;
+        // 게임 결과 정리
+        int totalYakitori = 0;
+        int bestYakitori = 0;
+        int maxSold = 0;
+        for(int i = 0; i < soldYakitori.Length; i++)
+        {
+            totalYakitori += soldYakitori[i];
+            if(maxSold < soldYakitori[i])
+            {
+                maxSold = soldYakitori[i];
+                bestYakitori = i;
+            }
+        }
+        Debug.Log("total: " + totalYakitori + " / best: " + bestYakitori + " / burn: " + burnYakitori + " / try: " + tryYakitori + " / wrong: " + wrongYakitori);
+        endText.text = totalYakitori + " 개\n" + money + " 원\n" + "100 %\n" + bestYakitori;
+        int burnScore = ((float)burnYakitori / tryYakitori) < 0.1f ? 200 
+            : ((float)burnYakitori / tryYakitori) < 0.3f ? 100
+            : 0;
+        int accuracyScore = ((float)wrongYakitori / (wrongYakitori + totalYakitori)) < 0.1f ? 20
+            : ((float)wrongYakitori / (wrongYakitori + totalYakitori)) < 0.3f ? 10
+            : 0;
+        Debug.Log("burn ratio: " + ((float)burnYakitori / tryYakitori) + " / wrong ratio: " + ((float)wrongYakitori / (wrongYakitori + totalYakitori)));
+        reviewText.text = GetReview(burnScore, accuracyScore, bestYakitori);
 
+        // 매출표 애니메이션
+        endAnim.SetTrigger("doEnd");
     }
 
     public void AddYakitori(Yakitori prefab)
@@ -113,6 +142,8 @@ public class GameManager : MonoBehaviour
                 yakitoris[i] = newYakitori;
                 newYakitori.transform.position = grills[i].position;
                 sfxManager.PlaySFX(SFXType.Fry);
+
+                tryYakitori++;
                 break;
             }
         }
@@ -228,19 +259,12 @@ public class GameManager : MonoBehaviour
                 curOrderList[i].amount--;
                 curOrderList[i].text.text = curOrderList[i].name + " " + curOrderList[i].amount + "개";
 
-                // 계산
-                int price = 0;
-                if (yakitori.yakitoriType == YakitoriType.Hatsu)
-                    price += 3000;
-                else
-                    price += 4000;
-
-                if (yakitori.sauceType != SauceType.None)
-                    price += 500;
-
+                // 계산과 판매량 관리
+                var (index, price) = GetYakitoriInfo(yakitori.yakitoriType, yakitori.sauceType);
                 money += price;
                 moneyText.text = "매출 : " + money + " 원";
-                soldYakitori++;
+
+                soldYakitori[index]++;
                 sfxManager.PlaySFX(SFXType.Coin);
 
                 // 잔여 개수 0개가 되면 주문 클리어
@@ -262,5 +286,54 @@ public class GameManager : MonoBehaviour
         }
 
         sfxManager.PlaySFX(SFXType.Wrong);
+        WrongYakitori();
+    }
+
+    private (int index, int price) GetYakitoriInfo(YakitoriType type, SauceType sauce)
+    {
+        int index = -1;
+        int price = 0;
+
+        if (type == YakitoriType.Hatsu)
+        {
+            index = (sauce == SauceType.Sweet) ? 2 :
+                    (sauce == SauceType.Hot) ? 5 : 8;
+            price = 3000;
+        }
+        else if (type == YakitoriType.Momo)
+        {
+            index = (sauce == SauceType.Sweet) ? 0 :
+                    (sauce == SauceType.Hot) ? 3 : 6;
+            price = 4000;
+        }
+        else if (type == YakitoriType.Negima)
+        {
+            index = (sauce == SauceType.Sweet) ? 1 :
+                    (sauce == SauceType.Hot) ? 4 : 7;
+            price = 4000;
+        }
+
+        if (sauce != SauceType.None)
+            price += 500;
+
+        return (index, price);
+    }
+
+
+    public void BurnYakitori()
+    {
+        burnYakitori++;
+    }
+
+    public void WrongYakitori()
+    {
+        wrongYakitori++;
+    }
+
+    public string GetReview(int burnScore, int accuracyScore, int menuIndex)
+    {
+        reviewDict = JsonConvert.DeserializeObject<Dictionary<int, string>>(reviewData.text);
+        int key = burnScore + accuracyScore + menuIndex;
+        return reviewDict.TryGetValue(key, out var review) ? review : "리뷰 없음";
     }
 }
