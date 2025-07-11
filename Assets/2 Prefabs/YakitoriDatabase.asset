@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85f79fa1385d4c409f7dbde76b3685f, type: 3}
+  m_Name: YakitoriDatabase
+  m_EditorClassIdentifier: 
+  yakitoriList:
+  - {fileID: 11400000, guid: 8a49fe45cd61408419f9df70884f4b49, type: 2}
+  - {fileID: 11400000, guid: 5469a1d1cce9162438fac4d30295a0ad, type: 2}
+  - {fileID: 11400000, guid: b787022db61c3684f81759117fede3f8, type: 2}
+  - {fileID: 11400000, guid: cb4f98ae9f014ca49b5cdfa018ac4094, type: 2}
+  - {fileID: 11400000, guid: 10b40062d83395645a085e92570f1d09, type: 2}
+  - {fileID: 11400000, guid: 0b7011dfc795ea74696d731a58225f87, type: 2}
+  - {fileID: 11400000, guid: 69e850ee031f1b14e96bbde51c3626a0, type: 2}
+  - {fileID: 11400000, guid: 6ff05600252218d41b5ac170790038e0, type: 2}
+  - {fileID: 11400000, guid: 166082c89908dfc4ca1d0562bf5ab6a5, type: 2}

@@ -8,6 +8,24 @@ TextureImporter:
   - first:
       213: 6956415723105280154
     second: town bg_1
+  - first:
+      213: 95447347437789788
+    second: town bg_2
+  - first:
+      213: -4447830946838909679
+    second: town bg_3
+  - first:
+      213: -1387534308439268521
+    second: town bg_4
+  - first:
+      213: 2358281262659976605
+    second: town bg_5
+  - first:
+      213: 4857268478124374736
+    second: town bg_6
+  - first:
+      213: 743320932256944536
+    second: town bg_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +93,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -132,10 +150,10 @@ TextureImporter:
       name: town bg_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 20
-        width: 160
-        height: 125
+        x: 40
+        y: 485
+        width: 38
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,10 +172,10 @@ TextureImporter:
       name: town bg_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 160
-        height: 15
+        x: 78
+        y: 488
+        width: 22
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -177,19 +195,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 100
-        y: 145
+        y: 485
         width: 38
         height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 8cf886ce387abf849b92120df136230f
-      internalID: 922088833
+      spriteID: c5268c65bd8135100800000000000000
+      internalID: 95447347437789788
       vertices: []
       indices: 
       edges: []
@@ -199,19 +217,151 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 138
-        y: 145
+        y: 488
         width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11d6da8c1512642c0800000000000000
+      internalID: -4447830946838909679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: town bg_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 469
+        width: 160
         height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7536fcfd5ec7ebce0800000000000000
+      internalID: -1387534308439268521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: town bg_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 343
+        width: 160
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9dbe4d405c4ab020800000000000000
+      internalID: 2358281262659976605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: town bg_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 217
+        width: 160
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0da3e4922fb786340800000000000000
+      internalID: 4857268478124374736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: town bg_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 91
+        width: 160
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8919949137ec05a00800000000000000
+      internalID: 743320932256944536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: town bg_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 53
+        width: 160
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca3230321cbd24a45b8363476007d06f
-      internalID: 2095355514
+      spriteID: 5eb329e3a7aa7e54d87b5f88fa9a3d26
+      internalID: -993929787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: town bg_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 13
+        width: 160
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a91d48402eba22844b7079ec8cf15c6f
+      internalID: -311482564
       vertices: []
       indices: 
       edges: []
@@ -220,7 +370,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ec3e6e956c1956844a2157e28a8e43c6
+    spriteID: 29fd637e187d92e44b3e6afca9deb8f4
     internalID: 0
     vertices: []
     indices: 
@@ -232,8 +382,14 @@ TextureImporter:
     nameFileIdTable:
       town bg_0: 7640229616816026248
       town bg_1: 6956415723105280154
-      town bg_2: 922088833
-      town bg_3: 2095355514
+      town bg_2: 95447347437789788
+      town bg_3: -4447830946838909679
+      town bg_4: -1387534308439268521
+      town bg_5: 2358281262659976605
+      town bg_6: 4857268478124374736
+      town bg_7: 743320932256944536
+      town bg_8: -993929787
+      town bg_9: -311482564
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

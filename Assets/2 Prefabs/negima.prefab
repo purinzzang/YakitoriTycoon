@@ -106,9 +106,7 @@ MonoBehaviour:
   yakitoriType: 1
   state: 0
   sauceType: 0
-  cookedSprite: {fileID: -2056386771, guid: b9351de8bd3bd3145950c4e94d636b12, type: 3}
-  sweetSprite: {fileID: -725376178, guid: b9351de8bd3bd3145950c4e94d636b12, type: 3}
-  hotSprite: {fileID: 811056082, guid: b9351de8bd3bd3145950c4e94d636b12, type: 3}
+  index: 1
 --- !u!61 &2616259349356483973
 BoxCollider2D:
   m_ObjectHideFlags: 0
