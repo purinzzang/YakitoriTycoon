@@ -11,6 +11,15 @@ TextureImporter:
   - first:
       213: 596416381699392502
     second: yakitoris_2
+  - first:
+      213: -1226037980481452323
+    second: yakitoris_3
+  - first:
+      213: 7231241512719610813
+    second: yakitoris_4
+  - first:
+      213: 949455466595911169
+    second: yakitoris_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -211,10 +220,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 2306f34537ff30e46a3ad159c0e6d5bc
-      internalID: -1422860245
+      spriteID: dd6044cd3fc3cfee0800000000000000
+      internalID: -1226037980481452323
       vertices: []
       indices: 
       edges: []
@@ -233,10 +242,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b256f27cd0b94bf419eb004520551687
-      internalID: -2056386771
+      spriteID: db3f5b2d7d78a5460800000000000000
+      internalID: 7231241512719610813
       vertices: []
       indices: 
       edges: []
@@ -255,10 +264,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 12a363ea1b9807c4fa23f0a776d608a9
-      internalID: -1423796352
+      spriteID: 106808867b42d2d00800000000000000
+      internalID: 949455466595911169
       vertices: []
       indices: 
       edges: []
@@ -279,8 +288,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67c2de6ab39ec1343af6622c91a30d85
-      internalID: -880075357
+      spriteID: fb683aeb07dabd9489e57156ba53118f
+      internalID: -1515943592
       vertices: []
       indices: 
       edges: []
@@ -301,8 +310,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b6cefa08883ae048b2f1e53d12f0450
-      internalID: -725376178
+      spriteID: 0c9a6372221cf6249bf802e9bb1fd12e
+      internalID: -1336605220
       vertices: []
       indices: 
       edges: []
@@ -323,8 +332,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1329a81dbc158e4eb58e156b2a44a34
-      internalID: 627393234
+      spriteID: ef6713d383842d14ebd781d07dad40ef
+      internalID: 1985590351
       vertices: []
       indices: 
       edges: []
@@ -345,8 +354,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c85837abe2c0b947b4b46fe0f44c514
-      internalID: 343968864
+      spriteID: 16adaefe214f14e46b40595beea2bc98
+      internalID: 739141103
       vertices: []
       indices: 
       edges: []
@@ -367,8 +376,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9bc441d4d653bfc4fba3c45e9329adc4
-      internalID: 811056082
+      spriteID: 7ca58c304933ecd4c9b7ee8bd14692de
+      internalID: 1289409742
       vertices: []
       indices: 
       edges: []
@@ -389,8 +398,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26a0c628913a4494a88c0aaf7771d79e
-      internalID: -486327330
+      spriteID: 52ea032c1850fc949860ca58d6caa729
+      internalID: -772234184
       vertices: []
       indices: 
       edges: []
@@ -399,7 +408,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7b8cac2efc2de28428ca7169b4f707eb
+    spriteID: da25dac9bfe3371418ae7daa2e87cab8
     internalID: 0
     vertices: []
     indices: 
@@ -411,16 +420,16 @@ TextureImporter:
     nameFileIdTable:
       yakitoris_0: -1475886271043369549
       yakitoris_1: 738904988909822508
-      yakitoris_10: 811056082
-      yakitoris_11: -486327330
+      yakitoris_10: 1289409742
+      yakitoris_11: -772234184
       yakitoris_2: 596416381699392502
-      yakitoris_3: -1422860245
-      yakitoris_4: -2056386771
-      yakitoris_5: -1423796352
-      yakitoris_6: -880075357
-      yakitoris_7: -725376178
-      yakitoris_8: 627393234
-      yakitoris_9: 343968864
+      yakitoris_3: -1226037980481452323
+      yakitoris_4: 7231241512719610813
+      yakitoris_5: 949455466595911169
+      yakitoris_6: -1515943592
+      yakitoris_7: -1336605220
+      yakitoris_8: 1985590351
+      yakitoris_9: 739141103
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

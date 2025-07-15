@@ -190,12 +190,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a68969ec2a282f4cb1c4b7c6f49d793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yakitoriType: 0
   state: 0
   sauceType: 0
-  cookedSprite: {fileID: -1422860245, guid: b9351de8bd3bd3145950c4e94d636b12, type: 3}
-  sweetSprite: {fileID: -880075357, guid: b9351de8bd3bd3145950c4e94d636b12, type: 3}
-  hotSprite: {fileID: 343968864, guid: b9351de8bd3bd3145950c4e94d636b12, type: 3}
+  index: 0
 --- !u!61 &5199572459335650060
 BoxCollider2D:
   m_ObjectHideFlags: 0

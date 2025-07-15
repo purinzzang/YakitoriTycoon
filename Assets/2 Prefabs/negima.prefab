@@ -103,7 +103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a68969ec2a282f4cb1c4b7c6f49d793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yakitoriType: 1
   state: 0
   sauceType: 0
   index: 1
@@ -256,7 +255,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.6666667, y: 1.0833334}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

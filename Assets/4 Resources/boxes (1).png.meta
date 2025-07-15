@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0c395cfcb1be92f4cac6f8a82d1918d7
+guid: 0a98ffd88b6e9314fbc3f2a67bc34990
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7339149984724004702
-    second: boxes_0
+      213: -6025094660055482153
+    second: boxes (1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boxes_0
+      name: boxes (1)_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,14 +141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a0563f29f9162a90800000000000000
-      internalID: -7339149984724004702
+      spriteID: 7d04a493450926ca0800000000000000
+      internalID: -6025094660055482153
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boxes_1
+      name: boxes (1)_1
       rect:
         serializedVersion: 2
         x: 41
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fbfab242704dc74a868864881d4f8c8
-      internalID: 2121362037
+      spriteID: bab63452f0f013046a23c1247cd13658
+      internalID: -1633443191
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boxes_2
+      name: boxes (1)_2
       rect:
         serializedVersion: 2
         x: 82
@@ -185,8 +185,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d5cd19deee90a441b5f920453fa6737
-      internalID: -2004317179
+      spriteID: beef765bef12284448799d152974fd04
+      internalID: -1753092713
       vertices: []
       indices: 
       edges: []
@@ -195,7 +195,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 43cbd9331be8fcb4ba2515849b6d176b
+    spriteID: 4594869f97288a043ae38220a81cba4e
     internalID: 0
     vertices: []
     indices: 
@@ -205,9 +205,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      boxes_0: -7339149984724004702
-      boxes_1: 2121362037
-      boxes_2: -2004317179
+      boxes (1)_0: -6025094660055482153
+      boxes (1)_1: -1633443191
+      boxes (1)_2: -1753092713
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

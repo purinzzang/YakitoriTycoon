@@ -190,7 +190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a68969ec2a282f4cb1c4b7c6f49d793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yakitoriType: 2
   state: 0
   sauceType: 0
   index: 2
