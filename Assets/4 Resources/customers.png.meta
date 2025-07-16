@@ -354,9 +354,9 @@ TextureImporter:
       name: customers_9
       rect:
         serializedVersion: 2
-        x: 59
+        x: 57
         y: 2
-        width: 14
+        width: 16
         height: 28
       alignment: 7
       pivot: {x: 0.5, y: 0}

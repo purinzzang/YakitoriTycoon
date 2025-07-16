@@ -18,18 +18,18 @@ public class Yakitori : MonoBehaviour
     public int index;
 
     Animator anim;
+    bool isNew;
+    float grillTime, burnTime;
 
     private void Start()
     {
         gameManager = GameManager.instance;
         sfxManager = SFXManager.instance;
         anim = GetComponent<Animator>();
-  
-    }
+        grillTime = gameManager.grillTime;
+        burnTime = gameManager.burnTime;
 
-    private void OnEnable()
-    {
-        StartCoroutine(CookCo());
+        InitYakitori(anim.runtimeAnimatorController, index);
     }
 
     public void InitYakitori(RuntimeAnimatorController ac, int index)
@@ -39,6 +39,10 @@ public class Yakitori : MonoBehaviour
         anim.runtimeAnimatorController = ac;
         this.index = index;
         transform.localScale = Vector3.one;
+
+        isNew = true;
+        gameObject.SetActive(true);
+        StartCoroutine(CookCo());
     }
 
     public void TouchYakitori()
@@ -50,7 +54,10 @@ public class Yakitori : MonoBehaviour
                 if (gameManager.curSauce == SauceType.None)
                 {
                     // 손님에게 제출
-                    gameManager.GiveYakitori(this);
+                    if (isNew)
+                    {
+                        isNew = !gameManager.GiveYakitori(this);
+                    }
                 }
                 else if (gameManager.curSauce == SauceType.Sweet)
                 {
@@ -68,7 +75,10 @@ public class Yakitori : MonoBehaviour
             else
             {
                 // 손님에게 제출
-                gameManager.GiveYakitori(this);
+                if (isNew)
+                {
+                    isNew = !gameManager.GiveYakitori(this);
+                }
             }
         }
         else if (state == YakitoriState.OverCooked)
@@ -81,15 +91,15 @@ public class Yakitori : MonoBehaviour
 
     IEnumerator CookCo()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(grillTime);
         anim.SetTrigger("doCooked");
         state = YakitoriState.Cooked;
 
-        yield return new WaitForSeconds(12f);
+        yield return new WaitForSeconds(10f);
   
         float elapsed = 0f;
 
-        while (elapsed < 3f)
+        while (elapsed < burnTime)
         {
             float pulse = Mathf.Sin(elapsed * Mathf.PI * 2f); // 0 → 1 → 0 → -1 → 0 (주기 1초)
             float t = (pulse + 1f) / 2f; // 0 → 1 → 0 → 0 → 1 (0~1로 변환)

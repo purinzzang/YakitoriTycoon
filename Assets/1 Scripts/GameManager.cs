@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     List<Customer> customerList = new List<Customer>();
     List<Customer> customerPool = new List<Customer>();
     public Vector3 firstLine;
+    public SpriteRenderer playerSR;
+    public Sprite[] playerSprites;
 
     // hud
     public TextMeshProUGUI[] orderTexts;
@@ -53,6 +55,11 @@ public class GameManager : MonoBehaviour
 
     // 애니메이션
     public Animator endAnim, bgAnim;
+
+    // 캐릭터 선택
+    bool isMan;
+    public GameObject[] characters;
+    public float grillTime, burnTime;
 
     private void Awake()
     {
@@ -73,16 +80,32 @@ public class GameManager : MonoBehaviour
         Camera.main.orthographicSize = cameraSize;
     }
 
-
     private void Start()
     {
         sfxManager = GetComponentInChildren<SFXManager>();
+
+        isMan = true;
         maxOrder = 1;
         tryYakitori = 0;
         soldYakitori = new int[9];
         burnYakitori = 0;
         yakitoris = new Yakitori[grills.Length];
         firstLine = customerPrefab.transform.position;
+    }
+
+    public void ChangeCharacter()
+    {
+        isMan = !isMan;
+        characters[0].SetActive(isMan);
+        characters[1].SetActive(!isMan);
+    }
+
+    public void GameStart()
+    {
+        playerSR.sprite = playerSprites[isMan ? 0 : 1];
+        grillTime = isMan ? 4f : 5f;
+        burnTime = isMan ? 3f : 5f;
+        GetComponent<AudioSource>().Play();
         AddCustomer();
         StartCoroutine(Main());
     }
@@ -134,14 +157,16 @@ public class GameManager : MonoBehaviour
             }
         }
         Debug.Log("total: " + totalYakitori + " / best: " + bestYakitori + " / burn: " + burnYakitori + " / try: " + tryYakitori + " / wrong: " + wrongYakitori);
-        endText.text = totalYakitori + " 개\n" + money + " 원\n" + "100 %\n" + yakitoriDatabase.GetYakitori(bestYakitori).displayName;
-        int burnScore = ((float)burnYakitori / tryYakitori) < 0.1f ? 200 
-            : ((float)burnYakitori / tryYakitori) < 0.3f ? 100
+        float wrongRatio = ((float)wrongYakitori / (wrongYakitori + totalYakitori));
+        float burnRatio = ((float)burnYakitori / tryYakitori);
+        endText.text = totalYakitori + " 개\n" + money.ToString("N0") + " 원\n" + ((1f - wrongRatio) * 100f) + " %\n\n" + yakitoriDatabase.GetYakitori(bestYakitori).displayName;
+        int burnScore = burnRatio < 0.1f ? 200 
+            : burnRatio < 0.3f ? 100
             : 0;
-        int accuracyScore = ((float)wrongYakitori / (wrongYakitori + totalYakitori)) < 0.1f ? 20
-            : ((float)wrongYakitori / (wrongYakitori + totalYakitori)) < 0.3f ? 10
+        int accuracyScore = wrongRatio < 0.1f ? 20
+            : wrongRatio < 0.3f ? 10
             : 0;
-        Debug.Log("burn ratio: " + ((float)burnYakitori / tryYakitori) + " / wrong ratio: " + ((float)wrongYakitori / (wrongYakitori + totalYakitori)));
+        Debug.Log("burn ratio: " + burnRatio + " / wrong ratio: " + wrongRatio);
         reviewText.text = GetReview(burnScore, accuracyScore, bestYakitori);
 
         // 매출표 애니메이션
@@ -149,7 +174,7 @@ public class GameManager : MonoBehaviour
     }
 
     // 닭꼬치
-    public void AddYakitori(Yakitori prefab)
+    public void AddYakitori(int index)
     {
         // 그릴 빈자리 찾아 닭꼬치 배치
         for(int i = 0; i < yakitoris.Length; i++)
@@ -160,13 +185,13 @@ public class GameManager : MonoBehaviour
                 if (yakitoriPool.Count > 0)
                 {
                     newYakitori = yakitoriPool[0];
-                    newYakitori.InitYakitori(prefab.GetComponent<Animator>().runtimeAnimatorController, prefab.index);
-                    newYakitori.gameObject.SetActive(true);
+                    newYakitori.InitYakitori(yakitoriDatabase.GetYakitori(index).ac, index);
+
                     yakitoriPool.RemoveAt(0);
                 }
                 else
                 {
-                    newYakitori = Instantiate(prefab);
+                    newYakitori = Instantiate(yakitoriDatabase.GetYakitori(index).prefab);
                 }
                      
                 yakitoris[i] = newYakitori;
@@ -219,12 +244,10 @@ public class GameManager : MonoBehaviour
             newCustomer = customerPool[0];
             customerPool.RemoveAt(0);
             newCustomer.gameObject.SetActive(true);
-            Debug.Log("재활용한 손님");
         }
         else
         {
             newCustomer = Instantiate(customerPrefab);
-            Debug.Log("새로만든 손님");
         }
 
         // 랜덤 주문 생성
@@ -281,7 +304,7 @@ public class GameManager : MonoBehaviour
         customerPool.Add(customer);
     }
 
-    public void GiveYakitori(Yakitori yakitori)
+    public bool GiveYakitori(Yakitori yakitori)
     {
         // 첫번째 손님 주문 목록 비교
         List<Order> curOrderList = customerList[0].orderList;
@@ -292,12 +315,12 @@ public class GameManager : MonoBehaviour
             if (curOrder.index == yakitori.index)
             {
                 curOrder.amount--;
-                curOrder.text.text = yakitoriDatabase.GetYakitori(curOrder.index).displayName + " " + curOrder.amount + "개";
+                UpdateOrderText(curOrderList);
+                //curOrder.text.text = yakitoriDatabase.GetYakitori(curOrder.index).displayName + " " + curOrder.amount + "개";
 
                 // 계산과 판매량 관리
-                //var (index, price) = GetYakitoriInfo(yakitori.yakitoriType, yakitori.sauceType);
                 money += yakitoriDatabase.GetYakitori(yakitori.index).price;
-                moneyText.text = "매출 : " + money + " 원";
+                moneyText.text = "매출 : " + money.ToString("N0") + " 원";
 
                 soldYakitori[yakitori.index]++;
                 sfxManager.PlaySFX(SFXType.Coin);
@@ -305,9 +328,10 @@ public class GameManager : MonoBehaviour
                 // 잔여 개수 0개가 되면 주문 클리어
                 if (curOrder.amount <= 0)
                 {
-                    curOrder.text.text = "";
-                    curOrder.text.gameObject.SetActive(false);
+                    //curOrder.text.text = "";
+                    //curOrder.text.gameObject.SetActive(false);
                     customerList[0].orderList.RemoveAt(i);
+                    UpdateOrderText(curOrderList);
 
                     // 주문 리스트 0개가 되면 손님 클리어
                     if (customerList[0].orderList.Count <= 0)
@@ -316,12 +340,13 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 yakitori.MoveToCustomer(firstLine + Vector3.up * 0.5f);
-                return;
+                return true;
             }
         }
 
         sfxManager.PlaySFX(SFXType.Wrong);
         WrongYakitori();
+        return false;
     }
 
     public void BurnYakitori()
@@ -343,6 +368,17 @@ public class GameManager : MonoBehaviour
 
     public void RetryGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
+    }
+
+    public void PauseGame(bool b)
+    {
+        StartCoroutine(ChangeTimeScaleCo(b));
+    }
+
+    IEnumerator ChangeTimeScaleCo(bool b)
+    {
+        yield return new WaitForSeconds(b==true?0.5f:0f);
+        Time.timeScale = b == true ? 0 : 1;
     }
 }

@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: YakitoriData
   m_EditorClassIdentifier: 
   index: 0
-  type: 0
-  sauce: 0
   displayName: "\uB2ED\uAF2C\uCE58"
   price: 4000
-  icon: {fileID: 0}
+  prefab: {fileID: 5846508880673790858, guid: ccdee2fcf8481d44894709b9eb09e1fd, type: 3}
+  ac: {fileID: 9100000, guid: 54e62d6a5a8e65642b6db8990f632492, type: 2}

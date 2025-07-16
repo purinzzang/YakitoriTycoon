@@ -4,7 +4,7 @@ using UnityEngine;
 public class YakitoriBox : MonoBehaviour
 {
     GameManager gameManager;
-    public Yakitori yakitoriPrefab;
+    public int index;
 
     void Start()
     {
@@ -13,6 +13,6 @@ public class YakitoriBox : MonoBehaviour
 
     public void SetYakitori()
     {
-        gameManager.AddYakitori(yakitoriPrefab);
+        gameManager.AddYakitori(index);
     }
 }

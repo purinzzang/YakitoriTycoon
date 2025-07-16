@@ -14,7 +14,7 @@ public class SFXManager : MonoBehaviour
 {
     public static SFXManager instance;
 
-    public AudioClip coinClip, burnClip, wrongClip, fryClip;
+    public AudioClip buttonClip, coinClip, burnClip, wrongClip, fryClip;
     private AudioSource audioSource;
 
     private Dictionary<SFXType, AudioClip> sfxDict;
@@ -47,5 +47,10 @@ public class SFXManager : MonoBehaviour
         {
             Debug.LogWarning($"SFXManager: 클립을 찾을 수 없음 {type}");
         }
+    }
+
+    public void PlayButton()
+    {
+        audioSource.PlayOneShot(buttonClip);
     }
 }
