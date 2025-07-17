@@ -12,11 +12,13 @@ public class TouchHandler : MonoBehaviour
 
     void Update()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE
         HandleMouseInput();
-#elif UNITY_ANDROID || UNITY_IOS
-        HandleTouchInput();
-#endif
+
+//#if UNITY_EDITOR || UNITY_STANDALONE
+//        HandleMouseInput();
+//#elif UNITY_ANDROID || UNITY_IOS
+//        HandleTouchInput();
+//#endif
     }
 
     void HandleMouseInput()
