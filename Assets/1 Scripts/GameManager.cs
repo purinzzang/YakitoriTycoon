@@ -61,8 +61,42 @@ public class GameManager : MonoBehaviour
     public GameObject[] characters;
     public float grillTime, burnTime;
 
+    // for test
+    public int spawnDelay, minSpawnDelay, maxSpawnDelay;
+    public bool isRandomSpawn;
+
+    public void RandomSpawnToggle(bool b)
+    {
+        isRandomSpawn = b;
+    }
+
+    public void ChangeSpawnDelay(string v)
+    {
+        if (v != "")
+        {
+            spawnDelay = int.Parse(v);
+        }
+    }
+
+    public void ChangeMinSpawnDelay(string v)
+    {
+        if (v != "")
+        {
+            minSpawnDelay = int.Parse(v);
+        }
+    }
+
+    public void ChangeMaxSpawnDelay(string v)
+    {
+        if (v != "")
+        {
+            maxSpawnDelay = int.Parse(v);
+        }
+    }
+
     private void Awake()
     {
+        Time.timeScale = 1;
         instance = this;
         SetCameraSize();
     }
@@ -91,6 +125,11 @@ public class GameManager : MonoBehaviour
         burnYakitori = 0;
         yakitoris = new Yakitori[grills.Length];
         firstLine = customerPrefab.transform.position;
+
+        // for test
+        spawnDelay = 10;
+        minSpawnDelay = 7;
+        maxSpawnDelay = 13;
     }
 
     public void ChangeCharacter()
@@ -159,7 +198,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("total: " + totalYakitori + " / best: " + bestYakitori + " / burn: " + burnYakitori + " / try: " + tryYakitori + " / wrong: " + wrongYakitori);
         float wrongRatio = ((float)wrongYakitori / (wrongYakitori + totalYakitori));
         float burnRatio = ((float)burnYakitori / tryYakitori);
-        endText.text = totalYakitori + " 개\n" + money.ToString("N0") + " 원\n" + ((1f - wrongRatio) * 100f) + " %\n\n" + yakitoriDatabase.GetYakitori(bestYakitori).displayName;
+        endText.text = totalYakitori + " 개\n" + money.ToString("N0") + " 원\n" + (int)((1f - wrongRatio) * 100f) + " %\n\n" + yakitoriDatabase.GetYakitori(bestYakitori).displayName;
         int burnScore = burnRatio < 0.1f ? 200 
             : burnRatio < 0.3f ? 100
             : 0;
@@ -213,17 +252,25 @@ public class GameManager : MonoBehaviour
             if(curSauce == SauceType.None)
             {
                 sweetSR.sprite = sweetSprites[0];
+                sweetSR.transform.localScale = Vector3.one;
                 hotSR.sprite = hotSprites[0];
+                hotSR.transform.localScale = Vector3.one;
             }
             else if (curSauce == SauceType.Sweet)
             {
                 sweetSR.sprite = sweetSprites[1];
+                sweetSR.transform.localScale = Vector3.one * 1.2f;
                 hotSR.sprite = hotSprites[0];
+                hotSR.transform.localScale = Vector3.one;
+                sfxManager.PlaySFX(SFXType.Sauce);
             }
             else if (curSauce == SauceType.Hot)
             {
                 sweetSR.sprite = sweetSprites[0];
+                sweetSR.transform.localScale = Vector3.one;
                 hotSR.sprite = hotSprites[1];
+                hotSR.transform.localScale = Vector3.one * 1.2f;
+                sfxManager.PlaySFX(SFXType.Sauce);
             }
         }
     }
@@ -267,7 +314,7 @@ public class GameManager : MonoBehaviour
         {
             UpdateOrderText(customerList[0].orderList);
         }
-        Invoke("AddCustomer", 10f);
+        Invoke("AddCustomer", isRandomSpawn ? Random.Range(minSpawnDelay, maxSpawnDelay) : spawnDelay);
     }
 
     public void UpdateOrderText(List<Order> orderList)
@@ -289,13 +336,21 @@ public class GameManager : MonoBehaviour
     {
         customerList[0].Bye();
         customerList.RemoveAt(0);
-        for(int i = 0; i <  customerList.Count; i++)
-        {
-            customerList[i].transform.position -= new Vector3(0.5f, 0);
-        }
+
         if (customerList.Count > 0)
         {
+            // 대기 손님 있을 때
+            for (int i = 0; i < customerList.Count; i++)
+            {
+                customerList[i].transform.position -= new Vector3(0.5f, 0);
+            }
             UpdateOrderText(customerList[0].orderList);
+        }
+        else
+        {
+            // 대기 손님 없을 때
+            CancelInvoke();
+            AddCustomer();
         }
     }
     
@@ -373,12 +428,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame(bool b)
     {
-        StartCoroutine(ChangeTimeScaleCo(b));
+        Time.timeScale = b ? 0 : 1;
     }
 
-    IEnumerator ChangeTimeScaleCo(bool b)
-    {
-        yield return new WaitForSeconds(b==true?0.5f:0f);
-        Time.timeScale = b == true ? 0 : 1;
-    }
 }

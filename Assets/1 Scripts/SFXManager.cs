@@ -6,7 +6,8 @@ public enum SFXType
     Coin,
     Burn,
     Wrong,
-    Fry
+    Fry,
+    Sauce
 }
 
 
@@ -14,7 +15,7 @@ public class SFXManager : MonoBehaviour
 {
     public static SFXManager instance;
 
-    public AudioClip buttonClip, coinClip, burnClip, wrongClip, fryClip;
+    public AudioClip buttonClip, coinClip, burnClip, wrongClip, fryClip, sauceClip;
     private AudioSource audioSource;
 
     private Dictionary<SFXType, AudioClip> sfxDict;
@@ -28,7 +29,8 @@ public class SFXManager : MonoBehaviour
             { SFXType.Coin, coinClip },
             { SFXType.Burn, burnClip },
             { SFXType.Wrong, wrongClip },
-            { SFXType.Fry, fryClip }
+            { SFXType.Fry, fryClip },
+            {SFXType.Sauce, sauceClip }
         };
     }
 
