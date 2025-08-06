@@ -127,9 +127,9 @@ public class GameManager : MonoBehaviour
         firstLine = customerPrefab.transform.position;
 
         // for test
-        spawnDelay = 10;
-        minSpawnDelay = 7;
-        maxSpawnDelay = 13;
+        spawnDelay = 7;
+        minSpawnDelay = 5;
+        maxSpawnDelay = 7;
     }
 
     public void ChangeCharacter()
@@ -314,7 +314,9 @@ public class GameManager : MonoBehaviour
         {
             UpdateOrderText(customerList[0].orderList);
         }
-        Invoke("AddCustomer", isRandomSpawn ? Random.Range(minSpawnDelay, maxSpawnDelay) : spawnDelay);
+        float delay = isRandomSpawn ? Random.Range((float)minSpawnDelay, (float)maxSpawnDelay) : spawnDelay;
+        Debug.Log(delay);
+        Invoke("AddCustomer", delay);
     }
 
     public void UpdateOrderText(List<Order> orderList)
