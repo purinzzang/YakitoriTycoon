@@ -38,6 +38,15 @@ AnimationClip:
     classID: 212
     script: {fileID: 0}
     flags: 2
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: -25870804, guid: 8764f345fedd8a34bafa0ad59ba2b538, type: 3}
+    attribute: m_Sprite
+    path: sky connect
+    classID: 212
+    script: {fileID: 0}
+    flags: 2
   m_SampleRate: 2
   m_WrapMode: 0
   m_Bounds:
@@ -63,10 +72,20 @@ AnimationClip:
       isPPtrCurve: 1
       isIntCurve: 0
       isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 1771391776
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: -993929787, guid: 8764f345fedd8a34bafa0ad59ba2b538, type: 3}
     - {fileID: -311482564, guid: 8764f345fedd8a34bafa0ad59ba2b538, type: 3}
     - {fileID: 743320932256944536, guid: 8764f345fedd8a34bafa0ad59ba2b538, type: 3}
+    - {fileID: -25870804, guid: 8764f345fedd8a34bafa0ad59ba2b538, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

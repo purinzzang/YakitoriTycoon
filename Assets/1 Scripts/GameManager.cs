@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour
 
     // 손님
     public Customer customerPrefab;
-    List<Customer> customerList = new List<Customer>();
-    List<Customer> customerPool = new List<Customer>();
+    public List<Customer> customerList = new List<Customer>();
+    public List<Customer> customerPool = new List<Customer>();
     public Vector3 firstLine;
     public SpriteRenderer playerSR;
     public Sprite[] playerSprites;
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI[] orderTexts;
     public TextMeshProUGUI moneyText, endText, reviewText;
     public Image timeBar;
+    public GameObject countDown;
 
     // 데이터
     int maxOrder, money, tryYakitori, burnYakitori, wrongYakitori;
@@ -54,7 +55,7 @@ public class GameManager : MonoBehaviour
     Dictionary<int, string> reviewDict;
 
     // 애니메이션
-    public Animator endAnim, bgAnim;
+    public Animator adAnim, countAnim, endAnim, bgAnim;
 
     // 캐릭터 선택
     bool isMan;
@@ -146,7 +147,7 @@ public class GameManager : MonoBehaviour
             timer++;
             timeBar.fillAmount = timer / maxTime;
 
-            if(timer % 30 == 0)
+            if(timer % 30 == 0 && maxOrder < 3)
             {
                 Debug.Log("level up");
                 maxOrder++;
@@ -160,10 +161,60 @@ public class GameManager : MonoBehaviour
             }
         }
         Debug.Log("end");
+
+        adAnim.SetTrigger("doShow");
+        Time.timeScale = 0;
+    }
+
+    public void WatchAdd()
+    {
+        //countAnim.SetTrigger("doCount");
+        StartCoroutine(ExtraTimeCo());
+        //CancelInvoke();
+    }
+
+    public void ExtraTime()
+    {
+        StartCoroutine(ExtraTimeCo());
+    }
+
+    IEnumerator ExtraTimeCo()
+    {
+        countDown.SetActive(true);
+        TextMeshProUGUI cText = countDown.GetComponentInChildren<TextMeshProUGUI>();
+        if (cText == null)
+            Debug.Log("null");
+        cText.text = "3";
+        yield return new WaitForSecondsRealtime(1f);
+        cText.text = "2";
+        yield return new WaitForSecondsRealtime(1f);
+        cText.text = "1";
+        yield return new WaitForSecondsRealtime(1f);
+        countDown.SetActive(false);
+        Time.timeScale = 1;
+
+        float timer = 75f;
+        float maxTime = 90f;
+        timeBar.fillAmount = timer / maxTime;
+        while (timer < maxTime)
+        {
+            yield return new WaitForSeconds(1f);
+            timer++;
+            timeBar.fillAmount = timer / maxTime;
+
+        }
+        Debug.Log("end");
+        GameEnd();
+    }
+
+    public void GameEnd()
+    {
+        Time.timeScale = 1;
+
         CancelInvoke();
 
         // 손님 전부 보내기
-        for(int i = 0; i < customerList.Count; i++)
+        for (int i = 0; i < customerList.Count; i++)
         {
             customerList[i].Bye();
         }
@@ -173,27 +224,35 @@ public class GameManager : MonoBehaviour
         int totalYakitori = 0;
         int bestYakitori = 0;
         int maxSold = 0;
-        for(int i = 0; i < soldYakitori.Length; i++)
+        for (int i = 0; i < soldYakitori.Length; i++)
         {
             totalYakitori += soldYakitori[i];
-            if(maxSold < soldYakitori[i])
+            if (maxSold < soldYakitori[i])
             {
                 maxSold = soldYakitori[i];
                 bestYakitori = i;
             }
         }
-        Debug.Log("total: " + totalYakitori + " / best: " + bestYakitori + " / burn: " + burnYakitori + " / try: " + tryYakitori + " / wrong: " + wrongYakitori);
+        //Debug.Log("total: " + totalYakitori + " / best: " + bestYakitori + " / burn: " + burnYakitori + " / try: " + tryYakitori + " / wrong: " + wrongYakitori);
         float wrongRatio = ((float)wrongYakitori / (wrongYakitori + totalYakitori));
         float burnRatio = ((float)burnYakitori / tryYakitori);
-        endText.text = totalYakitori + " 개\n" + money.ToString("N0") + " 원\n" + (int)((1f - wrongRatio) * 100f) + " %\n\n" + yakitoriDatabase.GetYakitori(bestYakitori).displayName;
-        int burnScore = burnRatio < 0.1f ? 200 
-            : burnRatio < 0.3f ? 100
-            : 0;
-        int accuracyScore = wrongRatio < 0.1f ? 20
-            : wrongRatio < 0.3f ? 10
-            : 0;
-        Debug.Log("burn ratio: " + burnRatio + " / wrong ratio: " + wrongRatio);
-        reviewText.text = GetReview(burnScore, accuracyScore, bestYakitori);
+        endText.text = totalYakitori + " 개\n" 
+            + money.ToString("N0") + " 원\n" 
+            + (totalYakitori + wrongYakitori > 0 ? (int)((1f - wrongRatio) * 100f) : "-") + " %\n\n" 
+            + (totalYakitori > 0 ? yakitoriDatabase.GetYakitori(bestYakitori).displayName : "-");
+
+        if(totalYakitori > 0)
+        {
+            int burnScore = burnRatio < 0.1f ? 200
+                : burnRatio < 0.3f ? 100
+                : 0;
+            int accuracyScore = wrongRatio < 0.1f ? 20
+                : wrongRatio < 0.3f ? 10
+                : 0;
+            //Debug.Log("burn ratio: " + burnRatio + " / wrong ratio: " + wrongRatio);
+            reviewText.text = GetReview(burnScore, accuracyScore, bestYakitori);
+        }
+
 
         // 매출표 애니메이션
         endAnim.SetTrigger("doEnd");
@@ -287,6 +346,7 @@ public class GameManager : MonoBehaviour
         // 랜덤 주문 생성
         for (int i = 0; i < maxOrder; i++)
         {
+            Debug.Log(i);
             Order newOrder = new Order();
             int ran = Random.Range(0, yakitoriDatabase.yakitoriList.Length);
             newOrder.amount = Random.Range(1, 4);
@@ -323,6 +383,9 @@ public class GameManager : MonoBehaviour
 
     public void ByeCustomer()
     {
+        if (customerList.Count == 0)
+            return;
+
         customerList[0].Bye();
         customerList.RemoveAt(0);
 
