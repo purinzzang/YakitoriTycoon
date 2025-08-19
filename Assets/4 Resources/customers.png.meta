@@ -156,10 +156,10 @@ TextureImporter:
       name: customers_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 37
-        width: 12
-        height: 25
+        x: 1
+        y: 36
+        width: 14
+        height: 27
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,10 +178,10 @@ TextureImporter:
       name: customers_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 37
-        width: 13
-        height: 25
+        x: 15
+        y: 36
+        width: 15
+        height: 27
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,10 +200,10 @@ TextureImporter:
       name: customers_2
       rect:
         serializedVersion: 2
-        x: 31
-        y: 37
-        width: 12
-        height: 29
+        x: 30
+        y: 36
+        width: 14
+        height: 31
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,10 +222,10 @@ TextureImporter:
       name: customers_3
       rect:
         serializedVersion: 2
-        x: 45
-        y: 37
-        width: 12
-        height: 27
+        x: 44
+        y: 36
+        width: 14
+        height: 29
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,10 +244,10 @@ TextureImporter:
       name: customers_4
       rect:
         serializedVersion: 2
-        x: 59
-        y: 37
-        width: 14
-        height: 28
+        x: 58
+        y: 36
+        width: 16
+        height: 30
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,10 +266,10 @@ TextureImporter:
       name: customers_5
       rect:
         serializedVersion: 2
-        x: 3
-        y: 2
-        width: 12
-        height: 30
+        x: 2
+        y: 1
+        width: 14
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,10 +288,10 @@ TextureImporter:
       name: customers_6
       rect:
         serializedVersion: 2
-        x: 17
-        y: 2
-        width: 12
-        height: 26
+        x: 16
+        y: 1
+        width: 14
+        height: 28
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,10 +310,10 @@ TextureImporter:
       name: customers_7
       rect:
         serializedVersion: 2
-        x: 31
-        y: 2
-        width: 12
-        height: 28
+        x: 30
+        y: 1
+        width: 14
+        height: 30
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

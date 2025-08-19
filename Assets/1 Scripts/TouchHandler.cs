@@ -12,13 +12,11 @@ public class TouchHandler : MonoBehaviour
 
     void Update()
     {
+#if UNITY_EDITOR
         HandleMouseInput();
-
-//#if UNITY_EDITOR || UNITY_STANDALONE
-//        HandleMouseInput();
-//#elif UNITY_ANDROID || UNITY_IOS
-//        HandleTouchInput();
-//#endif
+#else
+        HandleTouchInput();
+#endif
     }
 
     void HandleMouseInput()
@@ -72,37 +70,53 @@ public class TouchHandler : MonoBehaviour
 
     void HandleTouchInput()
     {
-        // 무입력 및 멀티 터치 제한
-        if (Input.touchCount != 1)
-            return;
-
-        Touch touch = Input.GetTouch(0);
-        if (touch.phase != TouchPhase.Began)
-            return;
-
-        // ui 확인
-        if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-            return;
-
-        Vector2 worldPos = Camera.main.ScreenToWorldPoint(touch.position);
-        RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
-
-        if (hit.collider != null)
+        if (Input.touchCount > 0)
         {
-            // 오브젝트 타입에 따라 처리
-            var yakitori = hit.collider.GetComponent<Yakitori>();
-            if (yakitori != null)
-            {
-                yakitori.TouchYakitori();
-            }
+            Touch touch = Input.GetTouch(0);
 
-            var box = hit.collider.GetComponent<YakitoriBox>();
-            if (box != null)
+            if (touch.phase == TouchPhase.Began)
             {
-                box.SetYakitori();
+                // UI 터치 무시
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                {
+                    return;
+                }
+
+                Vector2 worldPos = Camera.main.ScreenToWorldPoint(touch.position);
+                RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+
+                if (hit.collider != null)
+                {
+                    var yakitori = hit.collider.GetComponent<Yakitori>();
+                    if (yakitori != null)
+                    {
+                        yakitori.TouchYakitori();
+                    }
+
+                    var box = hit.collider.GetComponent<YakitoriBox>();
+                    if (box != null)
+                    {
+                        box.SetYakitori();
+                    }
+
+                    var sauce = hit.collider.GetComponent<Sauce>();
+                    if (sauce != null)
+                    {
+                        sauce.ChangeSauce();
+                    }
+
+                    var customer = hit.collider.GetComponent<Customer>();
+                    if (customer != null)
+                    {
+                        customer.TouchCustomer();
+                    }
+                }
+                else
+                {
+                    gameManager.ChangeSauce(SauceType.None);
+                }
             }
         }
-
-
     }
+
 }

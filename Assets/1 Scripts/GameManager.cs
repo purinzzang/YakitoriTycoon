@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI[] orderTexts;
     public TextMeshProUGUI moneyText, endText, reviewText;
     public Image timeBar;
-    public GameObject countDown;
+    public GameObject countDown, curOutline;
 
     // 데이터
     int maxOrder, money, tryYakitori, burnYakitori, wrongYakitori;
@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
         countDown.SetActive(false);
         Time.timeScale = 1;
 
-        float timer = 75f;
+        float timer = 60f;
         float maxTime = 90f;
         timeBar.fillAmount = timer / maxTime;
         while (timer < maxTime)
@@ -359,26 +359,33 @@ public class GameManager : MonoBehaviour
         customerList.Add(newCustomer);
         if(customerList.Count == 1)
         {
-            UpdateOrderText(customerList[0].orderList);
+            UpdateOrderText(customerList[0].orderList, customerList[0].transform.GetChild(0).gameObject);
         }
         float delay = isRandomSpawn ? Random.Range((float)minSpawnDelay, (float)maxSpawnDelay) : spawnDelay;
         Debug.Log(delay);
         Invoke("AddCustomer", delay);
     }
 
-    public void UpdateOrderText(List<Order> orderList)
+    public void UpdateOrderText(List<Order> orderList, GameObject outline)
     {
+        // 주문 텍스트 초기화
         for(int i = 0; i < orderTexts.Length; i++)
         {
             orderTexts[i].gameObject.SetActive(false);
         }
 
+        // 주문 목록의 항목 표시
         for(int i = 0; i < orderList.Count; i++)
         {
             Order order = orderList[i];
             order.text.text = yakitoriDatabase.GetYakitori(order.index).displayName + " " + order.amount + "개";
             order.text.gameObject.SetActive(true);
         }
+
+        if (curOutline != null)
+            curOutline.SetActive(false);
+        curOutline = outline;
+        curOutline.SetActive(true);
     }
 
     public void ByeCustomer()
@@ -396,7 +403,7 @@ public class GameManager : MonoBehaviour
             {
                 customerList[i].transform.position -= new Vector3(0.5f, 0);
             }
-            UpdateOrderText(customerList[0].orderList);
+            UpdateOrderText(customerList[0].orderList, customerList[0].transform.GetChild(0).gameObject);
         }
         else
         {
@@ -422,7 +429,7 @@ public class GameManager : MonoBehaviour
             if (curOrder.index == yakitori.index)
             {
                 curOrder.amount--;
-                UpdateOrderText(curOrderList);
+                UpdateOrderText(curOrderList, customerList[0].transform.GetChild(0).gameObject);
                 //curOrder.text.text = yakitoriDatabase.GetYakitori(curOrder.index).displayName + " " + curOrder.amount + "개";
 
                 // 계산과 판매량 관리
@@ -438,7 +445,7 @@ public class GameManager : MonoBehaviour
                     //curOrder.text.text = "";
                     //curOrder.text.gameObject.SetActive(false);
                     customerList[0].orderList.RemoveAt(i);
-                    UpdateOrderText(curOrderList);
+                    UpdateOrderText(curOrderList, customerList[0].transform.GetChild(0).gameObject);
 
                     // 주문 리스트 0개가 되면 손님 클리어
                     if (customerList[0].orderList.Count <= 0)

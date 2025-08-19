@@ -13,11 +13,11 @@ public class Order
 
 public class Customer : MonoBehaviour
 {
-    public Sprite[] sprites;
+    public Sprite[] sprites, outlines;
     public List<Order> orderList = new List<Order>();
 
     GameManager gameManager;
-    SpriteRenderer sr;
+    SpriteRenderer sr, outlineSR;
 
 
     void Start()
@@ -29,7 +29,11 @@ public class Customer : MonoBehaviour
     {
         StartCoroutine(WaitCo());
         sr = GetComponent<SpriteRenderer>();
-        sr.sprite = sprites[Random.Range(0, sprites.Length)];
+        outlineSR = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        int ran = Random.Range(0, sprites.Length);
+        sr.sprite = sprites[ran];
+        outlineSR.sprite = outlines[ran];
+        outlineSR.gameObject.SetActive(false);
     }
 
     IEnumerator WaitCo()
@@ -79,6 +83,6 @@ public class Customer : MonoBehaviour
 
     public void TouchCustomer()
     {
-        gameManager.UpdateOrderText(orderList);
+        gameManager.UpdateOrderText(orderList, outlineSR.gameObject);
     }
 }
